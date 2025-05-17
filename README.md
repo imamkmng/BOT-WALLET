@@ -1,2 +1,2 @@
 # BOT-WALLET
-Tester
+Generator Wallet Address & Private Key
