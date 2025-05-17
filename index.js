@@ -94,7 +94,7 @@ function checkDependencies() {
     } catch (e) {
         console.log(chalk.yellow('Menginstall dependencies tambahan...'));
         const { execSync } = require('child_process');
-        execSync('npm install chalk figlet', { stdio: 'inherit' });
+        execSync('npm install chalk@4 figlet', { stdio: 'inherit' });
     }
 }
 
