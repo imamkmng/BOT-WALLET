@@ -2,7 +2,7 @@ const { ethers } = require('ethers');
 const fs = require('fs');
 
 // Konfigurasi
-const jumlahWallet = 10; // Ganti dengan jumlah wallet yang ingin dibuat
+const jumlahWallet = 50; // Ganti dengan jumlah wallet yang ingin dibuat
 const filePath = 'account.txt';
 
 async function generateWallets() {
