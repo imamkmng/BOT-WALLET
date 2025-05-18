@@ -75,4 +75,24 @@ async function generateWallets() {
         // Simpan ke file
         fs.writeFileSync(filePath, content);
         console.log(chalk.magentaBright(`\n\n🎉 ${jumlahWallet} private key berhasil disimpan di ${filePath}`));
-        console.log(chalk.yellowBright('\n⚠️ Simpan file ini di tempat yang aman! Private key memberikan akses penuh ke wallet Anda!
+        console.log(chalk.yellowBright('\n⚠️ Simpan file ini di tempat yang aman! Private key memberikan akses penuh ke wallet Anda!'));
+        console.log(chalk.cyanBright('\nFollow @bangkomeng untuk tools keren lainnya!'));
+    } catch (error) {
+        console.error(chalk.red('\n❌ Terjadi error:'), error);
+    }
+}
+
+// Install dependencies jika belum ada
+function checkDependencies() {
+    try {
+        require.resolve('chalk');
+        require.resolve('figlet');
+    } catch (e) {
+        console.log(chalk.yellow('Menginstall dependencies tambahan...'));
+        const { execSync } = require('child_process');
+        execSync('npm install chalk@4 figlet', { stdio: 'inherit' });
+    }
+}
+
+checkDependencies();
+generateWallets();
