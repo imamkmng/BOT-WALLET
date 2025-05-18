@@ -44,13 +44,10 @@ async function generateWallets() {
 
         // Header untuk file
         let content = '=============================================\n';
-        content += 'Multi Wallet Generator Airdrop Newbie\n';
+        content += 'Multi Wallet Generator - Private Keys Only\n';
         content += 'Created by @bangkomeng\n';
         content += `Tanggal: ${new Date().toLocaleString()}\n`;
         content += '=============================================\n\n';
-        content += 'Daftar Wallet dan Private Key:\n\n';
-        content += 'No. | Alamat Wallet                          | Private Key\n';
-        content += '----|---------------------------------------|---------------------------------------------\n';
 
         console.log(chalk.yellow(`\n🔨 Membuat ${jumlahWallet} wallet...\n`));
 
@@ -68,9 +65,8 @@ async function generateWallets() {
         for (let i = 1; i <= jumlahWallet; i++) {
             const wallet = ethers.Wallet.createRandom();
             
-            // Format output
-            const line = `${i.toString().padEnd(3)} | ${wallet.address} | ${wallet.privateKey}\n`;
-            content += line;
+            // Format output (hanya private key)
+            content += `${wallet.privateKey}\n`;
             
             console.log(chalk.greenBright(`✅ Wallet ${i} berhasil dibuat: ${wallet.address}`));
             progressBar(i/jumlahWallet);
@@ -78,25 +74,5 @@ async function generateWallets() {
 
         // Simpan ke file
         fs.writeFileSync(filePath, content);
-        console.log(chalk.magentaBright(`\n\n🎉 ${jumlahWallet} wallet berhasil dibuat dan disimpan di ${filePath}`));
-        console.log(chalk.yellowBright('\n⚠️ Simpan file ini di tempat yang aman! Private key memberikan akses penuh ke wallet Anda!'));
-        console.log(chalk.cyanBright('\nFollow @bangkomeng untuk tools keren lainnya!'));
-    } catch (error) {
-        console.error(chalk.red('\n❌ Terjadi error:'), error);
-    }
-}
-
-// Install dependencies jika belum ada
-function checkDependencies() {
-    try {
-        require.resolve('chalk');
-        require.resolve('figlet');
-    } catch (e) {
-        console.log(chalk.yellow('Menginstall dependencies tambahan...'));
-        const { execSync } = require('child_process');
-        execSync('npm install chalk@4 figlet', { stdio: 'inherit' });
-    }
-}
-
-checkDependencies();
-generateWallets();
+        console.log(chalk.magentaBright(`\n\n🎉 ${jumlahWallet} private key berhasil disimpan di ${filePath}`));
+        console.log(chalk.yellowBright('\n⚠️ Simpan file ini di tempat yang aman! Private key memberikan akses penuh ke wallet Anda!
