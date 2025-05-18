@@ -44,10 +44,13 @@ async function generateWallets() {
 
         // Header untuk file
         let content = '=============================================\n';
-        content += 'Multi Wallet Generator - Private Keys Only\n';
+        content += 'Multi Wallet Generator - Addresses & Private Keys\n';
         content += 'Created by @bangkomeng\n';
         content += `Tanggal: ${new Date().toLocaleString()}\n`;
         content += '=============================================\n\n';
+
+        // Buat array untuk menyimpan wallet info
+        const wallets = [];
 
         console.log(chalk.yellow(`\n🔨 Membuat ${jumlahWallet} wallet...\n`));
 
@@ -64,17 +67,29 @@ async function generateWallets() {
         // Generate wallet
         for (let i = 1; i <= jumlahWallet; i++) {
             const wallet = ethers.Wallet.createRandom();
-            
-            // Format output (hanya private key)
-            content += `${wallet.privateKey}\n`;
+            wallets.push({
+                address: wallet.address,
+                privateKey: wallet.privateKey
+            });
             
             console.log(chalk.greenBright(`✅ Wallet ${i} berhasil dibuat: ${wallet.address}`));
             progressBar(i/jumlahWallet);
         }
 
+        // Format output
+        content += 'Addresses:\n';
+        wallets.forEach(wallet => {
+            content += `${wallet.address}\n`;
+        });
+
+        content += '\nPrivate Keys:\n';
+        wallets.forEach(wallet => {
+            content += `${wallet.privateKey}\n`;
+        });
+
         // Simpan ke file
         fs.writeFileSync(filePath, content);
-        console.log(chalk.magentaBright(`\n\n🎉 ${jumlahWallet} private key berhasil disimpan di ${filePath}`));
+        console.log(chalk.magentaBright(`\n\n🎉 ${jumlahWallet} wallet berhasil dibuat dan disimpan di ${filePath}`));
         console.log(chalk.yellowBright('\n⚠️ Simpan file ini di tempat yang aman! Private key memberikan akses penuh ke wallet Anda!'));
         console.log(chalk.cyanBright('\nFollow @bangkomeng untuk tools keren lainnya!'));
     } catch (error) {
